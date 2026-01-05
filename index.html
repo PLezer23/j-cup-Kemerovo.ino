@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Парк Кемерово - Карта достопримечательностей</title>
+    <link rel="stylesheet" href="main_page.css">
+    <script src="https://kit.fontawesome.com/04778ec5c9.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+            font-family: Georgia, sans-serif;
+            font-weight: bold;
+
+        }
+
+        body {
+            background-color: #fff4ee;
+            font-family: Georgia, "Times New Roman", Times, serif;
+        }
+
+        #logo{
+            border-radius: 50px;
+        }
+
+        .header-container{
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin: auto;
+            justify-content: space-between;
+            position: relative;
+            background-color: rgba(34, 40, 49, 1);
+        }
+
+        .pages {
+            display: flex;
+            gap: 35px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .pages a{
+            text-decoration: none;
+            color: #fff4ee;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .pages a:hover{
+            text-decoration: underline;
+            color: #00a6c0;
+        }
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .box{
+            max-width: 300px;
+            width: 100%;
+            margin-left: auto;
+        }
+
+        .box .search-box{
+            position: relative;
+            height: 50px;
+            max-width: 50px;
+            margin: auto;
+            transition: 500ms;
+        }
+
+        .search-box input{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px black solid;
+            border-radius: 20px;
+            outline: none;
+            font-size: 20px;
+            padding-left: 20px;
+            background: #fff4ee;
+        }
+
+        .search-box .search-icon{
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 100%;
+            background: #00a6c0;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 20px;
+        }
+
+        #checkbox:checked ~ .search-box{
+            max-width: 350px;
+        }
+
+        #checkbox:checked ~ .search-box .search-icon{
+            border-radius: 0 20px 20px 0;
+        }
+
+        #checkbox{
+            display: none;
+        }
+
+        .logo{
+            display: flex;
+            align-items: center;
+        }
+
+        .map p:first-child{
+            color: #222831;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        main{
+            border-radius: 15px;
+            background-color: rgba(165, 165, 165, 0.2);
+            margin: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            border: 3px black solid;
+            padding: 20px;
+        }
+
+        #map_photo{
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 1.5 / 1;
+            box-shadow: 0 8px 25px rgba(0,0,0, 0.05);
+
+        }
+
+        .map {
+            position: relative;
+            overflow: auto;
+        }
+
+        .legend {
+            position: absolute;
+            left: 30px;
+            top: calc(100% + 120px);
+            z-index: 10;
+            border: 1px solid #222831;
+            border-radius: 20px;
+            padding: 20px;
+            font-size: 16px;
+            background-color: #fff4ee;
+            width: 50vw;
+
+        }
+
+        .offer-legend i {
+            font-size: 3vw;
+            color: #4CAF50;
+        }
+
+        .sight-legend i {
+            font-size: 3vw;
+            color: #00a6c0;
+        }
+
+        .problem-legend i {
+            font-size: 3vw;
+            color: #ff6b6b;
+        }
+
+        .sight-legend span,
+        .problem-legend span,
+        .offer-legend span {
+            font-size: 3vw;
+            color: black;
+            font-weight: bold;
+        }
+
+        .offers-legend i{
+            font-size: 3vw;
+            color: black;
+        }
+
+        .location_sigh{
+            position: relative;
+            z-index: 100;
+        }
+
+        .marker{
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .marker i{
+            font-size: 40px;
+            text-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .marker.sight i{
+            color: #00a6c0;
+        }
+
+        .marker.problem i{
+            color: #ff6b6b;
+        }
+
+        .marker.offer i{
+            color: #4CAF50;
+        }
+
+        .marker:hover i {
+            transform: scale(1.25);
+            filter: drop-shadow(0 0 15px currentColor);
+        }
+
+        #infoModal.modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        #infoModal.modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff4ee;
+            border: 3px solid #222831;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalAppear 0.3s ease-out;
+        }
+
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #222831;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #00a6c0;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-type {
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .modal-type.sight {
+            background-color: #00a6c0;
+        }
+
+        .modal-type.problem {
+            background-color: #ff6b6b;
+        }
+
+        .modal-type.offer {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="logo">
+            <img id="logo" src="logo_one.png" width="100" height="100" alt="Kemerovo.ino">
+        </div>
+        <nav class="pages">
+            <a href="main_page.html">Главная</a>
+            <a href="about.html">О нас</a>
+        </nav>
+        <div class="box">
+            <input type="checkbox" id="checkbox">
+            <div class="search-box">
+                <input type="search" placeholder="Поиск по парку...">
+                <label for="checkbox" class="search-icon">
+                    <i class="fas fa-search"></i>
+                </label>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="map">
+        <h1>Внесите свой вклад в развитие парка</h1>
+
+        <div class="map-container">
+            <img id="map_photo" src="map.png" alt="Карта парка Кемерово">
+
+            <div class="marker sight" style="left: 60%; top: 50%;"
+                 data-title="Игровая площадка для детей"
+                 data-desc="Площадь более 2000 м², безопасное прорезиненное покрытие. Для детей разных возрастов.">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div class="marker sight" style="left: 25%; top: 35%;"
+                 data-title="Прогулочная зона с топиариями"
+                 data-desc="Топиарии в виде животных и растений, клумбы, оригинальные лавочки и малые архитектурные формы.">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div class="marker sight" style="left: 60%; top: 16%;"
+                 data-title="Ледовый дворец «Металлист»"
+                 data-desc="Каток, пункт проката, тренажёрный зал и зал хореографии.">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div class="marker sight" style="left: 47%; top: 35%;"
+                 data-title="Фонтан с перголой"
+                 data-desc="Фонтан с ночной подсветкой, окружённый перголой с качелями протяжённостью более 100 метров.">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div class="marker problem" style="left: 40%; top: 58%;"
+                 data-title="Сломана качеля"
+                 data-desc="У качели отломана одна цепь и сломана ручка">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div class="marker offer" style="left: 48%; top: 18%;"
+                 data-title="Велопарковка"
+                 data-desc="Предлагается поставить велопарков перед входом в ледовый дворец ведь туда многие приезжают на велосипедах и самокатах">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+        </div>
+
+        <div class="legend">
+            <div class="sight-legend">
+                <i class="fa-solid fa-location-dot sight-icon"></i>
+                <span>Достопримечательности</span>
+            </div>
+            <div class="problem-legend">
+                <i class="fa-solid fa-location-dot problem-icon"></i>
+                <span>Проблемы</span>
+            </div>
+            <div class="offer-legend">
+                <i class="fa-solid fa-location-dot offer-icon"></i>
+                <span>Предложения</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+        <div class="modal-type" id="modalType"></div>
+    </div>
+</div>
+<script>
+    // Открытие модального окна при клике на метку
+    document.querySelectorAll('.marker').forEach(marker => {
+        marker.addEventListener('click', function() {
+            const modal = document.getElementById('infoModal');
+            const title = this.getAttribute('data-title') || 'Метка';
+            const desc = this.getAttribute('data-desc') || 'Описание отсутствует';
+
+            // Определяем тип метки
+            let type = '';
+            let typeText = '';
+
+            if (this.classList.contains('sight')) {
+                type = 'sight';
+                typeText = 'Достопримечательность';
+            } else if (this.classList.contains('problem')) {
+                type = 'problem';
+                typeText = 'Проблема';
+            } else if (this.classList.contains('offer')) {
+                type = 'offer';
+                typeText = 'Предложение';
+            }
+
+            // Заполняем модальное окно
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('modalType').textContent = typeText;
+            document.getElementById('modalType').className = 'modal-type ' + type;
+
+            // Показываем окно
+            modal.style.display = 'block';
+
+            // Добавляем анимацию на метку
+            this.style.transform = 'translate(-50%, -50%) scale(1.2)';
+            setTimeout(() => {
+                this.style.transform = 'translate(-50%, -50%)';
+            }, 300);
+        });
+    });
+
+    // Закрытие модального окна
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        document.getElementById('infoModal').style.display = 'none';
+    });
+
+    // Закрытие при клике вне окна
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('infoModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Закрытие по клавише ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+    });
+
+    // Активация поиска
+    document.getElementById('checkbox').addEventListener('change', function() {
+        if (this.checked) {
+            document.querySelector('.search-box input').focus();
+        }
+    });
+
+    // Сообщение при загрузке
+    window.addEventListener('DOMContentLoaded', function() {
+        console.log('Карта парка загружена!');
+    });
+</script>
+</body>
+</html>
