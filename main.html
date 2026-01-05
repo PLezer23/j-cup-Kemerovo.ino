@@ -21,6 +21,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         #logo{
@@ -34,9 +36,7 @@
             flex-wrap: wrap;
             align-items: center;
             padding: clamp(10px, 3vw, 20px);
-            margin: auto;
             justify-content: space-between;
-            position: relative;
             background-color: rgba(34, 40, 49, 1);
             gap: 15px;
             width: 100%;
@@ -148,14 +148,12 @@
         }
 
         main{
-            border-radius: 15px;
             background-color: rgba(165, 165, 165, 0.2);
-            margin: clamp(10px, 2vw, 20px);
-            box-sizing: border-box;
+            margin: 0;
             overflow: hidden;
-            border: 3px black solid;
             padding: clamp(15px, 3vw, 20px);
             flex: 1;
+            width: 100%;
         }
 
         .map h1 {
@@ -165,11 +163,11 @@
             margin-bottom: 20px;
             text-align: center;
             word-break: break-word;
+            padding: 0 10px;
         }
 
         #map_photo{
             width: 100%;
-            max-width: 100%;
             height: auto;
             display: block;
             aspect-ratio: 1.5 / 1;
@@ -180,6 +178,7 @@
         .map {
             position: relative;
             overflow: auto;
+            width: 100%;
         }
 
         .map-container {
@@ -197,8 +196,6 @@
             max-width: 500px;
             margin: 20px auto 0;
             position: static;
-            left: auto;
-            top: auto;
         }
 
         @media (min-width: 768px) {
@@ -391,7 +388,6 @@
             word-break: break-word;
         }
 
-        /* Дополнительные медиа-запросы */
         @media (max-width: 360px) {
             .header-container {
                 gap: 10px;
@@ -403,7 +399,6 @@
             }
             
             main {
-                margin: 10px;
                 padding: 10px;
             }
             
@@ -428,19 +423,6 @@
             }
         }
 
-        @media (min-width: 1200px) {
-            .header-container {
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-            
-            main {
-                max-width: 1200px;
-                margin: 20px auto;
-            }
-        }
-
-        /* Для ландшафтной ориентации */
         @media (orientation: landscape) and (max-height: 600px) {
             .header-container {
                 padding: 10px;
@@ -456,7 +438,6 @@
             }
             
             main {
-                margin: 10px;
                 padding: 10px;
             }
         }
@@ -631,5 +612,6 @@
 </body>
 
 </html>
+
 
 
