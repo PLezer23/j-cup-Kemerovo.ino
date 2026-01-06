@@ -537,15 +537,14 @@
         <div class="modal-type" id="modalType"></div>
     </div>
 </div>
-<script>
-    // Открытие модального окна при клике на метку
+<script>
     document.querySelectorAll('.marker').forEach(marker => {
         marker.addEventListener('click', function() {
             const modal = document.getElementById('infoModal');
             const title = this.getAttribute('data-title') || 'Метка';
             const desc = this.getAttribute('data-desc') || 'Описание отсутствует';
 
-            // Определяем тип метки
+            
             let type = '';
             let typeText = '';
 
@@ -560,13 +559,13 @@
                 typeText = 'Предложение';
             }
 
-            // Заполняем модальное окно
+            
             document.getElementById('modalTitle').textContent = title;
             document.getElementById('modalDesc').textContent = desc;
             document.getElementById('modalType').textContent = typeText;
             document.getElementById('modalType').className = 'modal-type ' + type;
 
-            // Показываем окно
+            
             modal.style.display = 'block';
 
             // Добавляем анимацию на метку
@@ -577,12 +576,12 @@
         });
     });
 
-    // Закрытие модального окна
+    
     document.querySelector('.close-btn').addEventListener('click', function() {
         document.getElementById('infoModal').style.display = 'none';
     });
 
-    // Закрытие при клике вне окна
+    
     window.addEventListener('click', function(event) {
         const modal = document.getElementById('infoModal');
         if (event.target === modal) {
@@ -590,21 +589,21 @@
         }
     });
 
-    // Закрытие по клавише ESC
+    
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             document.getElementById('infoModal').style.display = 'none';
         }
     });
 
-    // Активация поиска
+    
     document.getElementById('checkbox').addEventListener('change', function() {
         if (this.checked) {
             document.querySelector('.search-box input').focus();
         }
     });
 
-    // Сообщение при загрузке
+    
     window.addEventListener('DOMContentLoaded', function() {
         console.log('Карта парка загружена!');
     });
