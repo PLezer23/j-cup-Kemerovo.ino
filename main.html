@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Парк Кемерово - Карта достопримечательностей</title>
-    <link rel="stylesheet" href="main_page.css">
+    <link rel="stylesheet" href="main.css">
     <script src="https://kit.fontawesome.com/04778ec5c9.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -537,7 +537,8 @@
         <div class="modal-type" id="modalType"></div>
     </div>
 </div>
-<script>
+<script>
+
     document.querySelectorAll('.marker').forEach(marker => {
         marker.addEventListener('click', function() {
             const modal = document.getElementById('infoModal');
@@ -611,6 +612,7 @@
 </body>
 
 </html>
+
 
 
 
