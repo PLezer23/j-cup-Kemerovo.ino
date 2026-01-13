@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Парк Кемерово - Карта достопримечательностей</title>
-    <link rel="stylesheet" href="main.css">
-    <script src="https://kit.fontawesome.com/04778ec5c9.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/04778ec5c9.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         *{
@@ -19,69 +18,36 @@
             background-color: #fff4ee;
             font-family: Georgia, "Times New Roman", Times, serif;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            overflow-x: hidden;
         }
 
         #logo{
             border-radius: 50px;
-            max-width: 100%;
-            height: auto;
         }
 
         .header-container{
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            padding: clamp(10px, 3vw, 20px);
+            padding: 20px;
+            margin: auto;
             justify-content: space-between;
+            position: relative;
             background-color: rgba(34, 40, 49, 1);
-            gap: 15px;
-            width: 100%;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .logo img {
-            width: clamp(60px, 10vw, 100px);
-            height: clamp(60px, 10vw, 100px);
         }
 
         .pages {
             display: flex;
-            gap: clamp(15px, 3vw, 35px);
-            position: static;
-            transform: none;
-            order: 3;
-            width: 100%;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        @media (min-width: 768px) {
-            .pages {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                width: auto;
-                order: 2;
-                margin-top: 0;
-            }
+            gap: 35px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .pages a{
             text-decoration: none;
             color: #fff4ee;
-            font-size: clamp(18px, 3vw, 30px);
+            font-size: 30px;
             font-weight: bold;
-            white-space: nowrap;
         }
 
         .pages a:hover{
@@ -89,81 +55,33 @@
             color: #00a6c0;
         }
 
-        .box{
-            max-width: 300px;
-            width: 100%;
-            margin-left: auto;
-            order: 2;
+        .logo{
+            display: flex;
+            align-items: center;
         }
 
-        @media (min-width: 768px) {
-            .box {
-                order: 3;
-            }
-        }
-
-        .box .search-box{
-            position: relative;
-            height: clamp(40px, 8vw, 50px);
-            max-width: 50px;
-            margin: auto;
-            transition: 500ms;
-        }
-
-        .search-box input{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 1px black solid;
-            border-radius: 20px;
-            outline: none;
-            font-size: clamp(14px, 2vw, 20px);
-            padding-left: 20px;
-            background: #fff4ee;
-        }
-
-        .search-box .search-icon{
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: clamp(40px, 8vw, 50px);
-            height: 100%;
-            background: #00a6c0;
+        .map h1{
+            color: #222831;
+            font-size: 32px;
+            margin-bottom: 20px;
             text-align: center;
-            line-height: clamp(40px, 8vw, 50px);
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        #checkbox:checked ~ .search-box{
-            max-width: min(350px, 90vw);
-        }
-
-        #checkbox:checked ~ .search-box .search-icon{
-            border-radius: 0 20px 20px 0;
-        }
-
-        #checkbox{
-            display: none;
         }
 
         main{
+            border-radius: 15px;
             background-color: rgba(165, 165, 165, 0.2);
-            margin: 0;
+            margin: 20px;
             overflow: hidden;
-            padding: clamp(15px, 3vw, 20px);
-            flex: 1;
-            width: 100%;
+            border: 3px black solid;
+            padding: 30px;
         }
 
-        .map h1 {
-            color: #222831;
-            font-size: clamp(24px, 5vw, 40px);
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            word-break: break-word;
-            padding: 0 10px;
+        .map-container {
+            position: relative;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         #map_photo{
@@ -171,42 +89,31 @@
             height: auto;
             display: block;
             aspect-ratio: 1.5 / 1;
-            box-shadow: 0 8px 25px rgba(0,0,0, 0.05);
-            object-fit: cover;
+            cursor: crosshair;
+            transition: all 0.3s;
+        }
+
+        #map_photo:hover {
+            opacity: 0.95;
         }
 
         .map {
             position: relative;
-            overflow: auto;
-            width: 100%;
-        }
-
-        .map-container {
-            position: relative;
-            width: 100%;
         }
 
         .legend {
-            border: 1px solid #222831;
-            border-radius: 20px;
-            padding: clamp(15px, 3vw, 20px);
-            font-size: clamp(14px, 2vw, 16px);
+            position: relative;
+            margin-top: 30px;
+            z-index: 10;
+            border: 2px solid #222831;
+            border-radius: 15px;
+            padding: 20px;
             background-color: #fff4ee;
             width: 100%;
-            max-width: 500px;
-            margin: 20px auto 0;
-            position: static;
-        }
-
-        @media (min-width: 768px) {
-            .legend {
-                width: 50vw;
-                max-width: none;
-                margin: 30px 0 0 30px;
-                position: absolute;
-                left: 30px;
-                top: calc(100% + 20px);
-            }
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .sight-legend,
@@ -214,48 +121,30 @@
         .offer-legend {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .sight-legend:last-child,
-        .problem-legend:last-child,
-        .offer-legend:last-child {
-            margin-bottom: 0;
-        }
-
-        .sight-legend i,
-        .problem-legend i,
-        .offer-legend i {
-            font-size: clamp(20px, 4vw, 30px);
-            color: inherit;
-            flex-shrink: 0;
+            gap: 15px;
         }
 
         .sight-legend i {
+            font-size: 28px;
             color: #00a6c0;
         }
 
         .problem-legend i {
+            font-size: 28px;
             color: #ff6b6b;
         }
 
         .offer-legend i {
+            font-size: 28px;
             color: #4CAF50;
         }
 
         .sight-legend span,
         .problem-legend span,
         .offer-legend span {
-            font-size: clamp(16px, 3vw, 24px);
+            font-size: 20px;
             color: black;
             font-weight: bold;
-            word-break: break-word;
-        }
-
-        .location_sigh{
-            position: relative;
-            z-index: 100;
         }
 
         .marker{
@@ -267,7 +156,7 @@
         }
 
         .marker i{
-            font-size: clamp(24px, 5vw, 40px);
+            font-size: 40px;
             text-shadow: 0 3px 8px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
@@ -285,22 +174,49 @@
             color: #4CAF50;
         }
 
+        .marker.new {
+            animation: pulse 0.5s ease-in-out;
+        }
+
         .marker:hover i {
             transform: scale(1.25);
-            filter: drop-shadow(0 0 15px currentColor);
+            filter: drop-shadow(0 0 12px currentColor);
         }
 
-        @media (max-width: 480px) {
-            .marker {
-                transform: translate(-50%, -50%) scale(0.9);
-            }
-            
-            .marker:hover i {
-                transform: scale(1.1);
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            70% { transform: translate(-50%, -50%) scale(1.3); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Подсказка для добавления метки */
+        .add-hint {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(34, 40, 49, 0.85);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 50;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (min-width: 768px) {
+            .add-hint {
+                display: block;
             }
         }
 
-        #infoModal.modal {
+        /* Модальные окна */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -311,57 +227,68 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
         .modal-content {
             background-color: #fff4ee;
             border: 3px solid #222831;
             border-radius: 20px;
-            padding: clamp(20px, 4vw, 30px);
-            width: 100%;
-            max-width: min(500px, 95vw);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
             position: relative;
             animation: modalAppear 0.3s ease-out;
-            max-height: 90vh;
-            overflow-y: auto;
+        }
+
+        .modal-contentBid {
+            background-color: #fff4ee;
+            border: 3px solid #222831;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalAppear 0.3s ease-out;
         }
 
         .close-btn {
             position: absolute;
-            right: clamp(15px, 3vw, 20px);
-            top: clamp(10px, 2vw, 15px);
-            font-size: clamp(24px, 5vw, 32px);
+            right: 20px;
+            top: 15px;
+            font-size: 32px;
             cursor: pointer;
             color: #222831;
             transition: color 0.3s;
-            line-height: 1;
-            z-index: 1001;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .close-btn:hover {
             color: #00a6c0;
+            transform: rotate(90deg);
         }
 
         @keyframes modalAppear {
             from {
                 opacity: 0;
-                transform: scale(0.9);
+                transform: translateY(-20px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: scale(1);
+                transform: translateY(0) scale(1);
             }
         }
 
         .modal-type {
-            padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+            padding: 10px 20px;
             border-radius: 20px;
             color: white;
             font-weight: bold;
             display: inline-block;
             margin-top: 15px;
-            font-size: clamp(14px, 2vw, 16px);
         }
 
         .modal-type.sight {
@@ -376,69 +303,100 @@
             background-color: #4CAF50;
         }
 
-        #modalTitle {
-            font-size: clamp(20px, 4vw, 28px);
-            margin-bottom: 15px;
-            word-break: break-word;
+        /* Форма добавления метки */
+        .formBid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
         }
 
-        #modalDesc {
-            font-size: clamp(16px, 2.5vw, 18px);
-            line-height: 1.5;
-            word-break: break-word;
+        #TextBid {
+            padding: 15px;
+            border: 2px solid #222831;
+            border-radius: 10px;
+            font-size: 16px;
+            min-height: 120px;
+            resize: vertical;
+            font-family: Georgia, sans-serif;
+            font-weight: normal;
         }
 
-        @media (max-width: 360px) {
-            .header-container {
-                gap: 10px;
-                padding: 10px;
-            }
-            
-            .pages {
-                gap: 10px;
-            }
-            
-            main {
-                padding: 10px;
-            }
-            
-            .legend {
-                padding: 10px;
-            }
+        #TextBid::placeholder {
+            color: #666;
+        }
+
+        #leaveType {
+            padding: 15px;
+            border: 2px solid #222831;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+            font-family: Georgia, sans-serif;
+            font-weight: normal;
+        }
+
+        .formBid button {
+            background: #00a6c0;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .formBid button:hover {
+            background: #008ba3;
         }
 
         @media (max-width: 768px) {
-            .header-container {
-                justify-content: center;
-                text-align: center;
-            }
-            
-            .box {
-                margin: 0 auto;
-                order: 2;
-            }
-            
             .pages {
-                order: 3;
+                gap: 20px;
+            }
+
+            .pages a {
+                font-size: 24px;
+            }
+
+            .marker i {
+                font-size: 32px;
+            }
+
+            .legend {
+                max-width: 100%;
+            }
+
+            .sight-legend span,
+            .problem-legend span,
+            .offer-legend span {
+                font-size: 18px;
             }
         }
 
-        @media (orientation: landscape) and (max-height: 600px) {
-            .header-container {
-                padding: 10px;
+        @media (max-width: 480px) {
+            .pages {
+                gap: 15px;
             }
-            
-            .logo img {
-                width: 50px;
-                height: 50px;
-            }
-            
+
             .pages a {
-                font-size: 16px;
+                font-size: 20px;
             }
-            
+
             main {
-                padding: 10px;
+                margin: 10px;
+                padding: 15px;
+            }
+
+            .map h1 {
+                font-size: 24px;
+            }
+
+            .marker i {
+                font-size: 28px;
             }
         }
     </style>
@@ -454,15 +412,6 @@
             <a href="main.html">Главная</a>
             <a href="about.html">О нас</a>
         </nav>
-        <div class="box">
-            <input type="checkbox" id="checkbox">
-            <div class="search-box">
-                <input type="search" placeholder="Поиск по парку...">
-                <label for="checkbox" class="search-icon">
-                    <i class="fas fa-search"></i>
-                </label>
-            </div>
-        </div>
     </div>
 </header>
 
@@ -472,6 +421,8 @@
 
         <div class="map-container">
             <img id="map_photo" src="map.png" alt="Карта парка Кемерово">
+
+            <div class="add-hint">Удерживайте 1 секунду на карте, чтобы добавить метку</div>
 
             <div class="marker sight" style="left: 60%; top: 50%;"
                  data-title="Игровая площадка для детей"
@@ -533,86 +484,154 @@
     <div class="modal-content">
         <span class="close-btn">&times;</span>
         <h3 id="modalTitle"></h3>
-        <p id="modalDesc"></p>
+        <p id="modalDesc" style="font-weight: normal; margin: 15px 0;"></p>
         <div class="modal-type" id="modalType"></div>
     </div>
 </div>
+<div id="leaveData" class="modal">
+    <div class="modal-contentBid">
+        <span class="close-btn">&times;</span>
+        <h3>Добавить новую метку</h3>
+        <form class="formBid">
+            <textarea id="TextBid" name="TextBid" placeholder="Опишите проблему или ваше предложение..." required></textarea>
+            <select id="leaveType" name="leaveType">
+                <option value="Предложение">Предложение</option>
+                <option value="Проблема">Проблема</option>
+            </select>
+            <button type="submit">Добавить метку</button>
+        </form>
+    </div>
+</div>
 <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const MODAL_SELECTORS = {
+            info: '#infoModal',
+            form: '#leaveData'
+        };
 
-    document.querySelectorAll('.marker').forEach(marker => {
-        marker.addEventListener('click', function() {
-            const modal = document.getElementById('infoModal');
-            const title = this.getAttribute('data-title') || 'Метка';
-            const desc = this.getAttribute('data-desc') || 'Описание отсутствует';
+        const TYPE_CONFIG = {
+            sight: { class: 'sight', text: 'Достопримечательность' },
+            problem: { class: 'problem', text: 'Проблема' },
+            offer: { class: 'offer', text: 'Предложение' }
+        };
 
-            
-            let type = '';
-            let typeText = '';
+        const closeModals = () => {
+            Object.values(MODAL_SELECTORS).forEach(id => {
+                document.querySelector(id).style.display = 'none';
+            });
+        };
 
-            if (this.classList.contains('sight')) {
-                type = 'sight';
-                typeText = 'Достопримечательность';
-            } else if (this.classList.contains('problem')) {
-                type = 'problem';
-                typeText = 'Проблема';
-            } else if (this.classList.contains('offer')) {
-                type = 'offer';
-                typeText = 'Предложение';
+        document.querySelectorAll('.marker').forEach(marker => {
+            marker.addEventListener('click', () => {
+                const modal = document.querySelector(MODAL_SELECTORS.info);
+                const title = marker.getAttribute('data-title') || 'Метка';
+
+                let typeKey = Object.keys(TYPE_CONFIG).find(key =>
+                    marker.classList.contains(key)
+                ) || 'offer';
+
+                const typeData = TYPE_CONFIG[typeKey];
+
+                // Заполняем модалку
+                document.getElementById('modalTitle').textContent = title;
+                document.getElementById('modalDesc').textContent =
+                    marker.getAttribute('data-desc') || 'Описание отсутствует';
+                document.getElementById('modalType').textContent = typeData.text;
+                document.getElementById('modalType').className = `modal-type ${typeData.class}`;
+
+                modal.style.display = 'flex';
+            });
+        });
+
+        document.querySelectorAll('.close-btn').forEach(btn => {
+            btn.addEventListener('click', closeModals);
+        });
+
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeModals();
+        });
+
+        const mapPhoto = document.getElementById('map_photo');
+        let holdTimer;
+
+        const clearHold = () => {
+            if (holdTimer) {
+                clearTimeout(holdTimer);
+                holdTimer = null;
             }
+        };
 
-            
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalDesc').textContent = desc;
-            document.getElementById('modalType').textContent = typeText;
-            document.getElementById('modalType').className = 'modal-type ' + type;
+        const startHold = e => {
+            holdTimer = setTimeout(() => showAddForm(e), 1000);
+        };
 
-            
-            modal.style.display = 'block';
+        mapPhoto.addEventListener('mousedown', startHold);
+        mapPhoto.addEventListener('touchstart', startHold);
+        mapPhoto.addEventListener('mouseup', clearHold);
+        mapPhoto.addEventListener('mouseleave', clearHold);
+        mapPhoto.addEventListener('touchend', clearHold);
 
-            // Добавляем анимацию на метку
-            this.style.transform = 'translate(-50%, -50%) scale(1.2)';
-            setTimeout(() => {
-                this.style.transform = 'translate(-50%, -50%)';
-            }, 300);
+        document.querySelector('.formBid').addEventListener('submit', e => {
+            e.preventDefault();
+            addMarker();
         });
     });
 
-    
-    document.querySelector('.close-btn').addEventListener('click', function() {
-        document.getElementById('infoModal').style.display = 'none';
-    });
+    function showAddForm(e) {
+        const rect = document.getElementById('map_photo').getBoundingClientRect();
+        const isTouch = e.type.includes('touch');
 
-    
-    window.addEventListener('click', function(event) {
-        const modal = document.getElementById('infoModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
+        const x = Math.round((isTouch ? e.touches[0].clientX : e.clientX) - rect.left);
+        const y = Math.round((isTouch ? e.touches[0].clientY : e.clientY) - rect.top);
+
+        const form = document.querySelector('.formBid');
+        form.dataset.x = x;
+        form.dataset.y = y;
+
+        document.getElementById('leaveData').style.display = 'flex';
+        document.getElementById('TextBid').focus();
+    }
+
+    function addMarker() {
+        const form = document.querySelector('.formBid');
+        const text = document.getElementById('TextBid').value.trim();
+
+        if (!text) {
+            alert('Пожалуйста, введите описание');
+            return;
         }
-    });
 
-    
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            document.getElementById('infoModal').style.display = 'none';
-        }
-    });
+        const type = document.getElementById('leaveType').value;
+        const typeClass = type === 'Проблема' ? 'problem' : 'offer';
+        const typeText = type === 'Проблема' ? 'Проблема' : 'Предложение';
 
-    
-    document.getElementById('checkbox').addEventListener('change', function() {
-        if (this.checked) {
-            document.querySelector('.search-box input').focus();
-        }
-    });
+        const marker = document.createElement('div');
+        marker.className = `marker new ${typeClass}`;
+        marker.style.left = `${form.dataset.x}px`;
+        marker.style.top = `${form.dataset.y}px`;
+        marker.innerHTML = '<i class="fa-solid fa-location-dot"></i>';
 
-    
-    window.addEventListener('DOMContentLoaded', function() {
-        console.log('Карта парка загружена!');
-    });
+        marker.setAttribute('data-title', text);
+        marker.setAttribute('data-desc', 'Добавлено пользователем');
+
+        marker.addEventListener('click', function() {
+            const modal = document.getElementById('infoModal');
+            document.getElementById('modalTitle').textContent = text;
+            document.getElementById('modalDesc').textContent = 'Добавлено пользователем';
+            document.getElementById('modalType').textContent = typeText;
+            document.getElementById('modalType').className = `modal-type ${typeClass}`;
+            modal.style.display = 'flex';
+        });
+
+        document.querySelector('.map-container').appendChild(marker);
+
+        document.getElementById('leaveData').style.display = 'none';
+        document.getElementById('TextBid').value = '';
+        alert('Метка успешно добавлена!');
+
+        setTimeout(() => marker.classList.remove('new'), 500);
+    }
 </script>
 </body>
-
 </html>
-
-
-
-
