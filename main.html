@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Парк Кемерово - Карта достопримечательностей</title>
-    <script src="https://kit.fontawesome.com/04778ec5c9.js"></script>
+    <script src="https://kit.fontawesome.com/04778ec5c9.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         *{
@@ -409,7 +409,7 @@
             <img id="logo" src="logo_one.png" width="100" height="100" alt="Kemerovo.ino">
         </div>
         <nav class="pages">
-            <a href="main.html">Главная</a>
+            <a href="index.html">Главная</a>
             <a href="about.html">О нас</a>
         </nav>
     </div>
@@ -424,6 +424,7 @@
 
             <div class="add-hint">Удерживайте 1 секунду на карте, чтобы добавить метку</div>
 
+            <!-- Статические метки (можно сохранить или загружать из localStorage при старте) -->
             <div class="marker sight" style="left: 60%; top: 50%;"
                  data-title="Игровая площадка для детей"
                  data-desc="Площадь более 2000 м², безопасное прорезиненное покрытие. Для детей разных возрастов.">
@@ -459,27 +460,26 @@
                  data-desc="Предлагается поставить велопарков перед входом в ледовый дворец ведь туда многие приезжают на велосипедах и самокатах">
                 <i class="fa-solid fa-location-dot"></i>
             </div>
-
         </div>
 
         <div class="legend">
             <div class="sight-legend">
-                <i class="fa-solid fa-location-dot sight-icon"></i>
+                <i class="fa-solid fa-location-dot"></i>
                 <span>Достопримечательности</span>
             </div>
             <div class="problem-legend">
-                <i class="fa-solid fa-location-dot problem-icon"></i>
+                <i class="fa-solid fa-location-dot"></i>
                 <span>Проблемы</span>
             </div>
             <div class="offer-legend">
-                <i class="fa-solid fa-location-dot offer-icon"></i>
+                <i class="fa-solid fa-location-dot"></i>
                 <span>Предложения</span>
             </div>
         </div>
     </div>
 </main>
 
-
+<!-- Модальные окна -->
 <div id="infoModal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
@@ -488,6 +488,7 @@
         <div class="modal-type" id="modalType"></div>
     </div>
 </div>
+
 <div id="leaveData" class="modal">
     <div class="modal-contentBid">
         <span class="close-btn">&times;</span>
@@ -502,6 +503,7 @@
         </form>
     </div>
 </div>
+
 <script>
     window.addEventListener('DOMContentLoaded', () => {
         const MODAL_SELECTORS = {
@@ -521,6 +523,7 @@
             });
         };
 
+        // Обработка кликов по существующим меткам
         document.querySelectorAll('.marker').forEach(marker => {
             marker.addEventListener('click', () => {
                 const modal = document.querySelector(MODAL_SELECTORS.info);
@@ -532,7 +535,6 @@
 
                 const typeData = TYPE_CONFIG[typeKey];
 
-                // Заполняем модалку
                 document.getElementById('modalTitle').textContent = title;
                 document.getElementById('modalDesc').textContent =
                     marker.getAttribute('data-desc') || 'Описание отсутствует';
@@ -543,15 +545,16 @@
             });
         });
 
+        // Закрытие модалок
         document.querySelectorAll('.close-btn').forEach(btn => {
             btn.addEventListener('click', closeModals);
         });
-
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeModals();
         });
 
+        // Добавление новой метки
         const mapPhoto = document.getElementById('map_photo');
         let holdTimer;
 
@@ -562,7 +565,7 @@
             }
         };
 
-        const startHold = e => {
+        const startHold = (e) => {
             holdTimer = setTimeout(() => showAddForm(e), 1000);
         };
 
@@ -572,7 +575,8 @@
         mapPhoto.addEventListener('mouseleave', clearHold);
         mapPhoto.addEventListener('touchend', clearHold);
 
-        document.querySelector('.formBid').addEventListener('submit', e => {
+        // Отправка формы
+        document.querySelector('.formBid').addEventListener('submit', (e) => {
             e.preventDefault();
             addMarker();
         });
@@ -581,7 +585,6 @@
     function showAddForm(e) {
         const rect = document.getElementById('map_photo').getBoundingClientRect();
         const isTouch = e.type.includes('touch');
-
         const x = Math.round((isTouch ? e.touches[0].clientX : e.clientX) - rect.left);
         const y = Math.round((isTouch ? e.touches[0].clientY : e.clientY) - rect.top);
 
@@ -611,7 +614,6 @@
         marker.style.left = `${form.dataset.x}px`;
         marker.style.top = `${form.dataset.y}px`;
         marker.innerHTML = '<i class="fa-solid fa-location-dot"></i>';
-
         marker.setAttribute('data-title', text);
         marker.setAttribute('data-desc', 'Добавлено пользователем');
 
